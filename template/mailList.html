@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>mailList</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/view.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <script src="../js/jquery-1.11.1.js"></script>
+    <script src="../js/data.js"></script>
+</head>
+<body class="bgImg">
+<div class="sidContent container bgFFF">
+    <h1 class="logo pdb30"><img class="pdr5" src="../images/desktop/menu.png" alt="内部通讯录">内部通讯录</h1>
+    <div class="mailList">
+        <form>
+            <header>
+                <input id="userName" type="text" name="name" placeholder="请输入姓名">
+                <select id="sex" name="sex">
+                    <option value="">请选择性别</option>
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
+                <input type="text" id="userAge" name="age" placeholder="请输入年龄">
+                <input type="text" id="telephone" name="tel" placeholder="请输入手机号" maxlength="11" />
+                <a class="button btnBorder" href="javascript:void(0)" id="add">提交</a>
+            </header>
+            <div>
+                <select name="number">
+                    <option value="">请选择排序字段</option>
+                    <option value="id">编号</option>
+                    <option value="age">年龄</option>
+                </select>
+                <select name="up">
+                    <option value="">请选择排序方式</option>
+                    <option value="up">升序</option>
+                    <option value="down">降序</option>
+                </select>
+                <a class="button btnBorder" href="javascript:void(0)" id="order">排序</a>
+                <a class="button btnBorder" href="javascript:void(0)" id="delete">批量删除</a>
+            </div>
+        </form>
+
+        <div class="mailList">
+            <table class="table1">
+                <thead>
+                <tr>
+                    <th><input type="checkbox" name="" id="checkAll"> 全选</th>
+                    <th>编号</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                    <th>手机号</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+$(function(){
+    var $tbody=$('tbody');
+    var $userName=$("#userName");
+    var $sex=$("#sex");
+    var $userAge=$("#userAge");
+    var $telephone=$("#telephone");
+    var $add=$("#add");
+    var $number=$("select[name='number']");
+    var $up=$("select[name='up']");
+    var $order=$("#order");
+    var $delete=$("#delete");
+    var numId="";
+    var regTel=/^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/;
+    var dataStem="";
+    var dataGte=[];
+    var dataGtem="";
+    if(localStorage.getItem("userList")==null){
+        dataStem=JSON.stringify(mailData);
+        localStorage.setItem("userList",dataStem);
+    }
+    dataGtem=localStorage.getItem("userList");
+    dataGte =JSON.parse(dataGtem);
+    //添加
+    $add.click(function(){
+        var telStr=$telephone.val();
+        if( !$userName.val()){
+            return alert('请输入姓名')
+        };
+        if( !$sex.val()){
+            return alert('请选择性别')
+        };
+        if( !$userAge.val() ){
+            return alert('请输入年龄')
+        }else if( isNaN($userAge.val()) ){
+            return alert('年龄必须是数字')
+        }else if( $userAge.val() > 99 || $userAge.val() <16 ){
+            return alert('年龄必须是16-99岁之间')
+        };
+        if(!telStr){
+            return alert('请输入手机号')
+        }else if(regTel.test(telStr)==false){
+            return alert('请输入正确的手机号')
+        }
+        dataGtem=localStorage.getItem("userList");
+        dataGte =JSON.parse(dataGtem);
+        numId=dataGte.length;
+        numId++;
+        dataGte.push({
+            "id":numId,
+            "username":$userName.val(),
+            "age":$userAge.val(),
+            "sex":$sex.val(),
+            "tel":$telephone.val()
+        });
+        $userName[0].value=$userAge[0].value=$sex[0].value=$telephone[0].value="";
+        dataStem=JSON.stringify(dataGte);
+        localStorage.setItem("userList",dataStem);
+        render(dataGte);
+    });
+    //创建tr
+    function createTr(data){
+        var tr = $('<tr rid="'+data.id+'" />');
+        tr.html('<td><input class="check" type="checkbox"></td>'+
+                '<td>'+ data.id+'</td>'+
+                '<td>'+ data.username+'</td>'+
+                '<td>'+ data.sex+'</td>'+
+                '<td>'+ data.age+'</td>'+
+                '<td>'+ data.tel+'</td>'+
+                '<td>'+
+                '<a class="button btnBorder moveUp" href="javascript:">上移</a>'+
+                '<a class="button btnBorder moveDown" href="javascript:">下移</a>'+
+                '<a class="button btnBorder moveDel" href="javascript:">删除</a>'+
+                '</td>');
+        return tr;
+    }
+   //渲染数据
+    render(dataGte);
+    function render(data){
+        $tbody.html("");
+        $.each(data,function(i,e){
+            var tr = createTr(e);
+            //点击checkbox选中当前行
+            tr.find('.check').click(function(){
+                if($(this).prop('checked')){
+                    $(this).closest('tr').addClass('bgFFa');
+                    e.checked = true;
+                    //console.log(e.checked)
+                }else{
+                    $(this).closest('tr').removeClass('bgFFa');
+                    e.checked = false;
+                }
+                //所有input都选中的时候,让全选按钮选中
+                $('#checkAll').prop('checked',allChecked());
+            });
+            tr.hover(function(){
+                $(this).addClass('bgE5D').siblings('tr').removeClass('bgE5D');
+            },function(){
+                $(this).removeClass('bgE5D');
+            });
+            $tbody.append(tr);
+            changeColor()
+        });
+    }
+    //点击排序按钮
+    $order.click(function(){
+        if(!$number.val()|| !$up.val()){
+            return alert("请选择排序方式");
+        }
+        toSort($up.val());
+        render(dataGte);
+
+    });
+    // 排序函数
+    function toSort(va){
+        dataGte.sort(function(a, b){
+            if(va == 'up'){
+                return a[$number.val()] - b[$number.val()];
+            }else{
+                return b[$number.val()] - a[$number.val()];
+            }
+        });
+
+    };
+    //隔行变色
+    function changeColor(){
+        $('tbody tr').each(function(i,e){
+            if(!$(e).find('.check').prop('checked')){
+                e.className = i%2?'bgFE0':'bgFFF';
+            }else{
+                e.className = 'bgFFa';
+            }
+        });
+    }
+    //批量删除
+    $delete.click(function(){
+        for(var i=0;i<dataGte.length;i++){
+            console.log(dataGte[i])
+            console.log(dataGte[i].checked)
+            if(dataGte[i].checked){
+                dataGte.splice(i,1);
+                i--;
+            }
+        }
+        dataStem=JSON.stringify(dataGte);
+        localStorage.setItem("userList",dataStem);
+        dataGtem=localStorage.getItem("userList");
+        dataGte =JSON.parse(dataGtem);
+        render(dataGte);
+    });
+
+    //点击全选按钮
+    $("#checkAll").on('click',function(){
+        $('.check').each(function(i,e){
+            if($('#checkAll').prop('checked')){
+                $(e).prop('checked',true);
+                $(e).closest('tr').addClass('bgFFa');
+                dataGte[i].checked = true;
+            }else{
+                $(e).prop('checked',false);
+                dataGte[i].checked = false;
+                changeColor();
+            }
+        });
+    });
+    //全选
+    function allChecked(){
+        for(var i=0;i<$('.check').length;i++){
+            if(!$('.check')[i].checked){
+                return false;
+            }
+        }
+        return true;
+    }
+    //下移
+    $("tbody").on('click','.moveUp',function(){
+        var id = $(this).closest('tr').attr('rid');
+        if(!$(this).closest("tr").prev().length){
+            return ;
+        };
+        for(var i=0;i<dataGte.length;i++){
+            if(dataGte[i].id == id){
+                break;
+            };
+        };
+        var temp = dataGte[i];
+        dataGte[i] = dataGte[i-1];
+        dataGte[i-1] = temp;
+        render(dataGte);
+    });
+    //上移
+    $("tbody").on('click','.moveDown',function(){
+        var id = $(this).closest('tr').attr('rid');
+        if(!$(this).closest("tr").next().length){
+            return ;
+        };
+        for(var i=0;i<dataGte.length;i++){
+            if(dataGte[i].id == id){
+                break;
+            };
+        };
+        var temp = dataGte[i];
+        dataGte[i] = dataGte[i+1];
+        dataGte[i+1] = temp;
+        render(dataGte);
+    });
+
+    //删除
+    $("tbody").on('click','.moveDel',function(){
+        var id = $(this).closest('tr').attr('rid');
+        for(var i=0;i<dataGte.length;i++){
+            if(dataGte[i].id == id){
+                dataGte.splice(i,1);
+                i--;
+            };
+        };
+        var temp = dataGte[i];
+        dataStem=JSON.stringify(dataGte);
+        localStorage.setItem("userList",dataStem);
+        dataGtem=localStorage.getItem("userList");
+        dataGte =JSON.parse(dataGtem);
+        render(dataGte);
+    });
+});
+
+</script>
+</body>
+</html>

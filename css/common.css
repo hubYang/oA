@@ -1,0 +1,23 @@
+@charset "utf-8";
+#container{min-width:990px;}
+.container{padding:30px 40px; margin:0 auto; width:950px;}
+/*左侧导航*/
+.colloaMenu{padding:10px 0 30px 0; width:20%; min-height:100vh; color:#fff9c5;   background:url("../images/common/bg.jpg") no-repeat left top;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+}
+.colloaSet dt{padding:25px 15px 25px 20px; width:50px; cursor:pointer;}
+.colloaSet dd{padding:30px 20px 25px 0px; width:90px; }
+h2.textHighlight,.listMenu li:hover,.listMenu li.textHighlight{color: orange; background:rgba(0,0,0,0.5);}
+.treeMenu h2,.listMenu li{padding: 3px 20px 3px 20px; margin: 3px 0px; display:block; line-height:2.5; cursor:pointer;}
+.treeMenu img{padding-right:5px;}
+.treeMenu span{line-height:24px;}
+.treeMenu h2:hover{color: orange;}
+.treeMenu h2:after{float:right; margin-right: 20px;}
+.listMenu li{padding-left:40px; }
+#colloaContent{padding:30px; width:80%;  background-color:#fff;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人通讯录</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/view.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <script src="../js/jquery-1.11.1.js"></script>
+    <style>
+        .boxBorder{
+            margin:20px 0;
+            width:40%;
+        }
+        .boxBorder div:nth-of-type(1){
+            display:inline-block;vertical-align:top;margin:10px 0px 10px 10px;
+        }
+        .boxBorder div:nth-of-type(2){
+            display:inline-block;vertical-align:top;margin:10px;
+        }
+    </style>
+</head>
+<body class="bgImg">
+<div class="sidContent container bgFFF">
+    <h1 class="logo pdb30"><img class="pdr5" src="../images/desktop/menu.png" alt="内部通讯录">个人通讯录</h1>
+    <div class="boxBorder">
+        <div>
+            <img border="0" src="../images/desktop/h23.png">
+        </div>
+        <div>
+            <span class="textBig" id="userName">李萌</span><br><span class="icon-circle textOrange pdr5"></span>在岗：探索协同运营管理之道<br><br>从属于：销售部<br>固定电话：025-84858968<br>移动电话：13900221452<br>电子邮件：limeng123@139.com<br>即时通信：
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        var userName="";
+        if(localStorage.getItem("searchName")==""){
+            localStorage.setItem("searchName","李萌");
+        }
+        userName=localStorage.getItem("searchName");
+        $("#userName").html(userName);
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Login - 10oa</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/view.css">
+    <script src="../js/jquery-1.11.1.js"></script>
+</head>
+<body style="">
+<div id="colloaBody">
+    <div id="colloaLogin">
+        <h1><img src="../images/common/10oa.png" height="40"></h1>
+        <div class="textcenter circle">
+            <img src="../images/main/dotBlue.gif">
+            <img src="../images/main/dotGreen.gif">
+            <img src="../images/main/dotYellow.gif">
+            <img src="../images/main/dotRed.gif">
+            <img src="../images/main/dotGray.gif">
+        </div>
+        <div class="login_input fn-clear">
+            <img class="fn-left" src="../images/main/person.png"/><input class="fn-left" placeholder="请输入用户名" type="text"
+                                                                               name="nameLogin" maxlength="20"
+                                                                               value="李萌">
+        </div>
+        <div class="login_input fn-clear">
+            <img class="fn-left" src="../images/main/lock.png"/><input class="fn-left" placeholder="请输入口令" type="password"
+                                                                             name="password" maxlength="20"
+                                                                             value="000000">
+        </div>
+            <a class="button" id="logoIn" href="desktop.html">登录系统</a>
+    </div>
+    <a class="copyright" href="http://www.10oa.com/" target="_blank">版权所有© 二进制软件有限公司</a>
+</div>
+<script>
+    var loginMess=[{"nameLogin":"李萌"},{"password":"000000"}];
+    var loginMessStr=JSON.stringify(loginMess);
+    var loginMessPar=[];
+    window.localStorage.setItem("loginMess",loginMessStr);
+    $("#logoIn").click(function() {
+        var $nameLogin=$("[name='nameLogin']").val();
+        var $password=$("[name='password']").val();
+        loginMessPar=JSON.parse(loginMessStr);
+        if($nameLogin==loginMessPar[0].nameLogin && $password==loginMessPar[1].password){
+            $(this).attr("href","desktop.html")
+        }else{
+            alert("请输入正确的用户名和密码")
+        }
+    })
+</script>
+</body>
+</html>
