@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b32505b7-63cc-460e-ac74-6ffee1165ac6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/template/addNew.html" afterPath="$PROJECT_DIR$/template/addNew.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="oA.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,8 +26,8 @@
       <file leaf-file-name="addNew.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/template/addNew.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5839524">
-              <caret line="19" column="35" selection-start-line="19" selection-start-column="35" selection-end-line="19" selection-end-column="35" />
+            <state vertical-scroll-proportion="0.75037146">
+              <caret line="23" column="7" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -204,8 +204,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/template/addNew.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5839524">
-          <caret line="19" column="35" selection-start-line="19" selection-start-column="35" selection-end-line="19" selection-end-column="35" />
+        <state vertical-scroll-proportion="0.75037146">
+          <caret line="23" column="7" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="7" />
           <folding />
         </state>
       </provider>
